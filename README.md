@@ -1,3 +1,5 @@
+<! -- 
+
 <div align="center">
 <a href="https://svgl.app">
 <img src="static/images/readme.png">
@@ -176,3 +178,5 @@ A list of extensions that use the [svgl API](https://svgl.app/api), created by t
 ## 🔑 License
 
 - [MIT](https://github.com/pheralb/svgl/blob/main/LICENSE).
+
+-->
