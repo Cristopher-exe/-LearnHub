@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Add viewbox to svg files if not present.",
   "main": "index.js",
-  "author": "@pheralb_",
+  "author": "@devcris_",
   "license": "ISC",
   "keywords": [
     "svg",

@@ -93,15 +93,8 @@
 </script>
 
 <svelte:head>
-  <title>A beautiful library with SVG logos - Svgl</title>
+  <title>repoHub</title>
 </svelte:head>
-
-<Search
-  bind:searchTerm
-  on:input={searchSvgs}
-  clearSearch={() => clearSearch()}
-  placeholder={`Search ${filteredSvgs.length} logos...`}
-/>
 
 <Container>
   <div class="flex items-center justify-end mb-4">
@@ -130,7 +123,7 @@
       <button class={buttonStyles} on:click={() => (showAll = true)}>
         <div class="flex items-center space-x-2 relative">
           <ArrowDown size={16} strokeWidth={2} />
-          <span>Load All SVGs</span>
+          <span>Load all repos</span>
           <span class="opacity-70">
             ({filteredSvgs.length - 30} more)
           </span>

@@ -7,7 +7,17 @@
   import { MIMETYPE, getSvgContent } from '@/utils/getSvgContent';
 
   // Icons:
-  import { CopyIcon, LinkIcon, ChevronsRight, Baseline, Sparkles } from 'lucide-svelte';
+  import {
+    CopyIcon,
+    LinkIcon,
+    ChevronsRight,
+    Baseline,
+    Sparkles,
+    GitFork,
+    Star,
+    BookMarked,
+    ArrowUpRight
+  } from 'lucide-svelte';
 
   // Components & styles:
   import CardSpotlight from './cardSpotlight.svelte';
@@ -84,185 +94,61 @@
 </script>
 
 <CardSpotlight>
-  <div class="flex flex-col items-center justify-center rounded-md p-4">
-    <!-- Image -->
-    {#if wordmarkSvg == true}
-      <img
-        class="hidden dark:block mb-4 mt-2 h-10 select-none"
-        src={typeof svgInfo.wordmark !== 'string'
-          ? svgInfo.wordmark?.dark || ''
-          : svgInfo.wordmark || ''}
-        alt={svgInfo.title}
-        title={svgInfo.title}
-        loading="lazy"
-      />
-      <img
-        class="block dark:hidden mb-4 mt-2 h-10 select-none"
-        src={typeof svgInfo.wordmark !== 'string'
-          ? svgInfo.wordmark?.light || ''
-          : svgInfo.wordmark || ''}
-        alt={svgInfo.title}
-        title={svgInfo.title}
-        loading="lazy"
-      />
-    {:else}
-      <img
-        class={cn('hidden dark:block mb-4 mt-2 h-10 select-none')}
-        src={typeof svgInfo.route !== 'string' ? svgInfo.route.dark : svgInfo.route}
-        alt={svgInfo.title}
-        title={svgInfo.title}
-        loading="lazy"
-      />
-      <img
-        class={cn('block dark:hidden mb-4 mt-2 h-10 select-none')}
-        src={typeof svgInfo.route !== 'string' ? svgInfo.route.light : svgInfo.route}
-        alt={svgInfo.title}
-        title={svgInfo.title}
-        loading="lazy"
-      />
-    {/if}
+  <div class="flex flex-col rounded-md p-4 w-full">
     <!-- Title -->
-    <div class="mb-3 flex flex-col space-y-1 items-center justify-center">
-      <p class="truncate text-[15px] font-medium text-balance text-center select-all">
-        {svgInfo.title}
-      </p>
-      <div class="flex items-center space-x-1 justify-center">
-        {#if Array.isArray(svgInfo.category)}
-          {#each svgInfo.category.sort() as c, index}
-            <a href={`/directory/${c.toLowerCase()}`} class={badgeStyles}>{c} </a>
-          {/each}
-        {:else}
-          <a href={`/directory/${svgInfo.category.toLowerCase()}`} class={badgeStyles}>
-            {svgInfo.category}
-          </a>
-        {/if}
+
+    <div class="mb-3 flex flex-row justify-between">
+      <div class="flex flex-row space-x-2">
+        <BookMarked size={iconSize} strokeWidth={iconStroke} />
+
+        <a
+          href={svgInfo.url}
+          title="Website"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="truncate text-[15px] font-medium text-balance text-center select-all hover:underline cursor-pointer"
+          >{svgInfo.title}</a
+        >
       </div>
-    </div>
-    <!-- Actions -->
-    <div class="flex items-center space-x-1">
-      {#if isInFigma}
-        <button
-          title="Insert to figma"
-          on:click={() => {
-            const svgHasTheme = typeof svgInfo.route !== 'string';
-
-            if (!svgHasTheme) {
-              insertSVG(
-                typeof svgInfo.route === 'string'
-                  ? svgInfo.route
-                  : "Something went wrong. Couldn't copy the SVG."
-              );
-              return;
-            }
-
-            const dark = document.documentElement.classList.contains('dark');
-
-            insertSVG(
-              typeof svgInfo.route !== 'string'
-                ? dark
-                  ? svgInfo.route.dark
-                  : svgInfo.route.light
-                : svgInfo.route
-            );
-          }}
-          class="flex items-center space-x-2 rounded-md p-2 duration-100 hover:bg-neutral-200 dark:hover:bg-neutral-700/40"
-        >
-          <ChevronsRight size={iconSize} strokeWidth={iconStroke} />
-        </button>
-      {/if}
-
-      {#if wordmarkSvg}
-        <button
-          title="Copy wordmark SVG to clipboard"
-          on:click={() => {
-            const svgHasTheme = typeof svgInfo.wordmark !== 'string';
-
-            if (!svgHasTheme) {
-              copyToClipboard(
-                typeof svgInfo.wordmark === 'string'
-                  ? svgInfo.wordmark
-                  : "Something went wrong. Couldn't copy the SVG."
-              );
-              return;
-            }
-
-            const dark = document.documentElement.classList.contains('dark');
-
-            copyToClipboard(
-              typeof svgInfo.wordmark !== 'string'
-                ? dark
-                  ? svgInfo.wordmark?.dark
-                  : svgInfo.wordmark?.light
-                : svgInfo.wordmark
-            );
-          }}
-          class="flex items-center space-x-2 rounded-md p-2 duration-100 hover:bg-neutral-200 dark:hover:bg-neutral-700/40"
-        >
-          <CopyIcon size={iconSize} strokeWidth={iconStroke} />
-        </button>
-      {:else}
-        <button
-          title="Copy to clipboard"
-          on:click={() => {
-            const svgHasTheme = typeof svgInfo.route !== 'string';
-
-            if (!svgHasTheme) {
-              copyToClipboard(
-                typeof svgInfo.route === 'string'
-                  ? svgInfo.route
-                  : "Something went wrong. Couldn't copy the SVG."
-              );
-              return;
-            }
-
-            const dark = document.documentElement.classList.contains('dark');
-
-            copyToClipboard(
-              typeof svgInfo.route !== 'string'
-                ? dark
-                  ? svgInfo.route.dark
-                  : svgInfo.route.light
-                : svgInfo.route
-            );
-          }}
-          class="flex items-center space-x-2 rounded-md p-2 duration-100 hover:bg-neutral-200 dark:hover:bg-neutral-700/40"
-        >
-          <CopyIcon size={iconSize} strokeWidth={iconStroke} />
-        </button>
-      {/if}
-
-      <DownloadSvg
-        {svgInfo}
-        isDarkTheme={() => {
-          const dark = document.documentElement.classList.contains('dark');
-          return dark;
-        }}
-      />
-
       <a
         href={svgInfo.url}
         title="Website"
         target="_blank"
         rel="noopener noreferrer"
-        class="flex items-center space-x-2 rounded-md p-2 duration-100 hover:bg-neutral-200 dark:hover:bg-neutral-700/40"
+        class="flex items-center rounded-md p-1 duration-100 hover:bg-neutral-200 dark:hover:bg-neutral-700/40"
       >
-        <LinkIcon size={iconSize} strokeWidth={iconStroke} />
+        <ArrowUpRight size={iconSize} strokeWidth={iconStroke} />
       </a>
-      {#if svgInfo.wordmark !== undefined}
-        <button
-          title={wordmarkSvg ? 'Show logo SVG' : 'Show wordmark SVG'}
-          on:click={() => {
-            wordmarkSvg = !wordmarkSvg;
-          }}
-          class="flex items-center space-x-2 rounded-md p-2 duration-100 hover:bg-neutral-200 dark:hover:bg-neutral-700/40"
-        >
-          {#if wordmarkSvg}
-            <Sparkles size={iconSize} strokeWidth={iconStroke} />
-          {:else}
-            <Baseline size={iconSize} strokeWidth={iconStroke} />
-          {/if}
-        </button>
+    </div>
+
+    <!-- Description -->
+    <div class="flex flex-row">
+      <p class="truncate text-[13px] font-medium text-start select-all">
+        Lorem ipsum, dolor sit amet consectetur uno.
+      </p>
+    </div>
+
+    <!-- category -->
+    <div class="mt-3 flex items-center space-x-5 justify-start">
+      {#if Array.isArray(svgInfo.category)}
+        {#each svgInfo.category.sort() as c, index}
+          <a href={`/directory/${c.toLowerCase()}`} class={badgeStyles}>{c} </a>
+        {/each}
+      {:else}
+        <a href={`/directory/${svgInfo.category.toLowerCase()}`} class={badgeStyles}>
+          {svgInfo.category}
+        </a>
       {/if}
+
+      <div class="flex items-center space-x-1">
+        <Star size={iconSize} strokeWidth={iconStroke} />
+        <span>123</span>
+      </div>
+
+      <div class="flex items-center space-x-1">
+        <GitFork size={iconSize} strokeWidth={iconStroke} />
+        <span>123</span>
+      </div>
     </div>
   </div>
 </CardSpotlight>

@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>{data.meta.title} - SVGL</title>
+  <title>{data.meta.title} - repoHub</title>
   <meta property="og:type" content="article" />
   <meta property="og:title" content={data.meta.title} />
   <meta property="og:description" content={data.meta.description} />

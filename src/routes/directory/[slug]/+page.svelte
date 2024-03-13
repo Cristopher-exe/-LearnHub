@@ -46,21 +46,22 @@
 </script>
 
 <svelte:head>
-  <title>{category} logos - Svgl</title>
+  <title>{category} - repoHub</title>
 </svelte:head>
 
 <Container>
-  <Search
+  <!-- <Search
     bind:searchTerm
     on:input={searchSvgs}
     clearSearch={() => clearSearch()}
     placeholder={`Search ${filteredSvgs.length} ${category} logos...`}
-  />
+  /> -->
   <Grid>
     {#each filteredSvgs as svg}
       <SvgCard svgInfo={svg} />
     {/each}
   </Grid>
+
   {#if filteredSvgs.length === 0}
     <NotFound notFoundTerm={searchTerm} />
   {/if}
