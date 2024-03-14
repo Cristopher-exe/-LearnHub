@@ -22,7 +22,7 @@
         <div class="flex items-center space-x-2 opacity-80 hover:opacity-100 transition-opacity">
           <svelte:component this={Logo} />
           <span class="text-[19px] font-medium tracking-wide hidden md:block">repoHub</span>
-          <p class="text-neutral-400 hidden md:block font-mono">v0.1</p>
+          <!-- <p class="text-neutral-400 hidden md:block font-mono">v0.1</p> -->
         </div>
       </a>
     </div>

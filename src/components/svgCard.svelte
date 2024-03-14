@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { iSVG } from '../types/svg';
+  import type { iRepos } from '../types/repos';
   import { toast } from 'svelte-sonner';
 
   // Utils:
@@ -7,17 +8,7 @@
   import { MIMETYPE, getSvgContent } from '@/utils/getSvgContent';
 
   // Icons:
-  import {
-    CopyIcon,
-    LinkIcon,
-    ChevronsRight,
-    Baseline,
-    Sparkles,
-    GitFork,
-    Star,
-    BookMarked,
-    ArrowUpRight
-  } from 'lucide-svelte';
+  import { GitFork, Star, BookMarked, ArrowUpRight } from 'lucide-svelte';
 
   // Components & styles:
   import CardSpotlight from './cardSpotlight.svelte';
@@ -30,7 +21,8 @@
   import { insertSVG as figmaInsertSVG } from '@/figma/insert-svg';
 
   // Props:
-  export let svgInfo: iSVG;
+  //export let svgInfo: iSVG;
+  export let reposInfo: iRepos;
 
   let isInFigma = false;
   onMount(() => {
@@ -60,26 +52,26 @@
       await navigator.clipboard.writeText(content);
     }
 
-    const category = Array.isArray(svgInfo.category)
-      ? svgInfo.category.sort().join(' - ')
-      : svgInfo.category;
+    const category = Array.isArray(reposInfo.category)
+      ? reposInfo.category.sort().join(' - ')
+      : reposInfo.category;
 
     if (isInFigma) {
       toast.success('Ready to paste in Figma!', {
-        description: `${svgInfo.title} - ${category}`
+        description: `${reposInfo.title} - ${category}`
       });
       return;
     }
 
     if (wordmarkSvg) {
       toast.success('Copied wordmark SVG to clipboard!', {
-        description: `${svgInfo.title} - ${category}`
+        description: `${reposInfo.title} - ${category}`
       });
       return;
     }
 
     toast.success('Copied to clipboard!', {
-      description: `${svgInfo.title} - ${category}`
+      description: `${reposInfo.title} - ${category}`
     });
   };
 
@@ -102,16 +94,16 @@
         <BookMarked size={iconSize} strokeWidth={iconStroke} />
 
         <a
-          href={svgInfo.url}
+          href={reposInfo.url}
           title="Website"
           target="_blank"
           rel="noopener noreferrer"
-          class="truncate text-[15px] font-medium text-balance text-center select-all hover:underline cursor-pointer"
-          >{svgInfo.title}</a
+          class="truncate text-[15px] font-medium text-balance text-center select-all hover:underline cursor-pointer text-gray-800 dark:text-white"
+          >{reposInfo.title}</a
         >
       </div>
       <a
-        href={svgInfo.url}
+        href={reposInfo.url}
         title="Website"
         target="_blank"
         rel="noopener noreferrer"
@@ -123,20 +115,22 @@
 
     <!-- Description -->
     <div class="flex flex-row">
-      <p class="truncate text-[13px] font-medium text-start select-all">
+      <p
+        class="truncate text-[13px] font-medium text-start select-all text-gray-600 dark:text-white"
+      >
         Lorem ipsum, dolor sit amet consectetur uno.
       </p>
     </div>
 
     <!-- category -->
     <div class="mt-3 flex items-center space-x-5 justify-start">
-      {#if Array.isArray(svgInfo.category)}
-        {#each svgInfo.category.sort() as c, index}
+      {#if Array.isArray(reposInfo.category)}
+        {#each reposInfo.category.sort() as c, index}
           <a href={`/directory/${c.toLowerCase()}`} class={badgeStyles}>{c} </a>
         {/each}
       {:else}
-        <a href={`/directory/${svgInfo.category.toLowerCase()}`} class={badgeStyles}>
-          {svgInfo.category}
+        <a href={`/directory/${reposInfo.category.toLowerCase()}`} class={badgeStyles}>
+          {reposInfo.category}
         </a>
       {/if}
 

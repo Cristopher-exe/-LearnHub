@@ -20,3 +20,5 @@ export type tCategory =
   | 'Fintech'
   | 'Music'
   | 'Vercel';
+
+export type tCategoryRepos = 'Java' | 'Open Source' | 'Software' | 'JavaScript' | 'C++';

@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import type { iSVG } from '@/types/svg';
+  import type { iRepos } from '@/types/repos';
   import { queryParam } from 'sveltekit-search-params';
 
   export let data: PageData;
-  let svgsByCategory = data.svgs || [];
+  let reposByCategory = data.repos || [];
   let category = data.category || '';
 
   // Components:
@@ -17,31 +17,30 @@
   // URL params
   const searchParam = queryParam('search');
 
-  // Search:
   let searchTerm = $searchParam || '';
-  let filteredSvgs: iSVG[] = [];
+  let filteredRepos: iRepos[] = [];
 
   if (searchTerm.length === 0) {
-    filteredSvgs = svgsByCategory.sort((a: iSVG, b: iSVG) => {
+    filteredRepos = reposByCategory.sort((a: iRepos, b: iRepos) => {
       return a.title.localeCompare(b.title);
     });
   }
 
-  const searchSvgs = () => {
+  const searchRepos = () => {
     $searchParam = searchTerm || null;
-    return (filteredSvgs = svgsByCategory.filter((svg: iSVG) => {
-      let svgTitle = svg.title.toLowerCase();
-      return svgTitle.includes(searchTerm.toLowerCase());
+    return (filteredRepos = reposByCategory.filter((repo: iRepos) => {
+      let repoTitle = repo.title.toLowerCase();
+      return repoTitle.includes(searchTerm.toLowerCase());
     }));
   };
 
-  const clearSearch = () => {
+  const clearSearch2 = () => {
     searchTerm = '';
-    searchSvgs();
+    searchRepos();
   };
 
   if ($searchParam) {
-    searchSvgs();
+    searchRepos();
   }
 </script>
 
@@ -50,19 +49,19 @@
 </svelte:head>
 
 <Container>
-  <!-- <Search
+  <Search
     bind:searchTerm
-    on:input={searchSvgs}
-    clearSearch={() => clearSearch()}
-    placeholder={`Search ${filteredSvgs.length} ${category} logos...`}
-  /> -->
+    on:input={searchRepos}
+    clearSearch={() => clearSearch2()}
+    placeholder={`Search ${filteredRepos.length} ${category} repos...`}
+  />
   <Grid>
-    {#each filteredSvgs as svg}
-      <SvgCard svgInfo={svg} />
+    {#each filteredRepos as repo}
+      <SvgCard reposInfo={repo} />
     {/each}
   </Grid>
 
-  {#if filteredSvgs.length === 0}
+  {#if filteredRepos.length === 0}
     <NotFound notFoundTerm={searchTerm} />
   {/if}
 </Container>

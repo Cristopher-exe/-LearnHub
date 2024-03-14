@@ -26,7 +26,7 @@
   }
 </script>
 
-<div class="sticky top-[63px] z-50">
+<div class="container mx-auto px-6 pt-4 xl:px-0 sticky top-[63px] z-50">
   <div class="relative w-full text-[16px]">
     <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-neutral-500">
       <div class="pointer-events-none">
@@ -52,13 +52,6 @@
         >
           <X size={18} />
         </button>
-      </div>
-    {:else}
-      <div class="absolute inset-y-0 right-0 flex items-center pr-4 text-neutral-500">
-        <div class="flex h-full items-center pointer-events-none gap-x-1 font-mono">
-          <Command size={16} />
-          <span>K</span>
-        </div>
       </div>
     {/if}
   </div>

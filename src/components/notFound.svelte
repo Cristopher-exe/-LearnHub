@@ -6,9 +6,9 @@
 
 <div class="mt-6 flex w-full flex-col items-center justify-center text-gray-600 dark:text-gray-400">
   <PackageOpen size={40} class="mb-4" />
-  <p class="text-xl mb-1 font-medium">Couldn't find the Icon</p>
+  <p class="text-xl mb-1 font-medium">Couldn't find the Repository</p>
   <p class="text-md mb-4 font-mono">"{notFoundTerm}"</p>
-  <div class="flex items-center space-x-1">
+  <!-- <div class="flex items-center space-x-1">
     <a href="https://github.com/Cristopher-exe/repoHub" target="_blank" class={buttonStyles}>
       <span>Submit logo</span>
       <ArrowUpRight size={16} />
@@ -17,5 +17,5 @@
       <span>Request Icon</span>
       <ArrowUpRight size={16} />
     </a>
-  </div>
+  </div> -->
 </div>

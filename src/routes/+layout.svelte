@@ -8,20 +8,25 @@
 
   // Get categories:
   import { svgs } from '@/data/svgs';
-  const categories = svgs
-    .flatMap((svg) => (Array.isArray(svg.category) ? svg.category : [svg.category]))
-    .filter((category, index, array) => array.indexOf(category) === index);
+  import { repos } from '@/data/repos';
 
   // Toaster:
   import { Toaster } from 'svelte-sonner';
 
   // Components for all pages:
   import Transition from '@/components/transition.svelte';
-  import Warning from '@/components/warning.svelte';
 
   // Layout:
   import Navbar from '@/components/navbar.svelte';
   import { cn } from '@/utils/cn';
+
+  const categories = svgs
+    .flatMap((svg) => (Array.isArray(svg.category) ? svg.category : [svg.category]))
+    .filter((category, index, array) => array.indexOf(category) === index);
+
+  const categoriesR = repos
+    .flatMap((repo) => (Array.isArray(repo.category) ? repo.category : [repo.category]))
+    .filter((category, index, array) => array.indexOf(category) === index);
 </script>
 
 <ModeWatcher />
@@ -40,7 +45,7 @@
       data-sveltekit-preload-data>All</a
     >
     <!-- Order alfabetically: -->
-    {#each categories.sort() as category}
+    {#each categoriesR.sort() as category}
       <a
         href={`/directory/${category.toLowerCase()}`}
         class={cn(
@@ -57,7 +62,6 @@
 </div>
 <main>
   <div class="ml-0 md:ml-30 pb-6">
-    <Warning />
     <Transition pathname={data.pathname}>
       <slot />
     </Transition>
